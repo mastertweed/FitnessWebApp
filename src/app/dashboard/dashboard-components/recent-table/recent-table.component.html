@@ -33,11 +33,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor='let data of tableData'>
+                            <tr *ngFor='let data of heartrates'>
                                 <td> {{data.id}} </td>
+                                <td> {{data.session}} </td>
+                                <td> {{data.timecreated}} </td>
+                                <td> {{data.Heartrate}} </td>
+                                <!-- <td> {{data.id}} </td>
                                 <td> {{data.Name}} </td>
                                 <td> {{data.Status}} </td>
-                                <td> {{data.Date.toDateString()}} </td>
+                                <td> {{data.Date.toDateString()}} </td> -->
                                 <!-- <td>
                                     <span *ngIf='data.Price < 0' style="color: #f33155;">$ {{data.Price}} </span>
                                     <span *ngIf='data.Price > 0 && data.Price < 500' style="color: #7ace4c;">$
