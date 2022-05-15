@@ -4,28 +4,24 @@ import { Heartrate } from 'src/app/Models/heartrate.model';
 import { HeartrateService } from 'src/app/Services/heartrate.service';
 import { Session } from 'src/app/Models/sessions.model';
 import { SessionsService } from 'src/app/Services/sessions.service';
-import { RecentSale, recentSales } from './recent-table-data';
 
 @Component({
-  selector: 'app-recent-table',
-  templateUrl: './recent-table.component.html',
-  styleUrls: ['./recent-table.component.css']
+  selector: 'app-sessions-table',
+  templateUrl: './sessions-table.component.html',
+  styleUrls: ['./sessions-table.component.css']
 })
-export class RecentTableComponent implements OnInit, OnDestroy {
+export class SessionsTableComponent implements OnInit {
 
-  tableData: RecentSale[];
 
   heartrates: Heartrate[] = [];
   private heartratesSub: Subscription = new Subscription;
+
   private heartratesSessionSub: Subscription = new Subscription;
 
   sessions: Session[] = [];
   private sessionsSub: Subscription = new Subscription;
 
   constructor(private heartratesService: HeartrateService, private sessionsService: SessionsService) {
-    this.tableData = recentSales;
-    console.log(this.tableData[4].Date.toDateString());
-
   }
 
   ngOnInit(): void {
@@ -36,17 +32,20 @@ export class RecentTableComponent implements OnInit, OnDestroy {
         this.heartrates = heartrates
       })
 
-    this.heartratesSessionSub = this.heartratesService.getHeartRateBySessionIDUpdateListener()
-      .subscribe((heartrates) => {
-        this.heartrates = heartrates
-      })
-
     // Get all session data
     this.sessionsService.getSessionsAll()
     this.sessionsSub = this.sessionsService.getSessionsUpdateListener()
       .subscribe((sessions) => {
         this.sessions = sessions
       })
+  }
+
+  showSession(session: number) {
+    this.heartratesService.getHeartRateBySessionID(session)
+    this.heartratesSessionSub = this.heartratesService.getHeartRateBySessionIDUpdateListener()
+    .subscribe((heartrates) => {
+      this.heartrates = heartrates
+    })
   }
 
   ngOnDestroy() {

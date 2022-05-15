@@ -6,15 +6,14 @@
                 <!-- title -->
                 <div class="d-md-flex align-items-center">
                     <div>
-                        <h4 class="card-title font-16 text-uppercase">Heartrate Data</h4>
+                        <h4 class="card-title font-16 text-uppercase">Sessions</h4>
+                        <p>(click row to show)</p>
                     </div>
                     <div class="ml-auto">
                         <div class="dl">
                         </div>
                     </div>
                 </div>
-                <!-- title -->
-
                 <div class="table-responsive">
                     <table class="table v-middle nowrap">
                         <thead>
@@ -22,17 +21,14 @@
                                 <th class="border-top-0">#</th>
                                 <th class="border-top-0">Session</th>
                                 <th class="border-top-0">Timestamp</th>
-                                <th class="border-top-0">Heartrate</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor='let data of heartrates | slice:0:10;'>
+                            <tr *ngFor='let data of sessions' (click)="showSession(data.session)">
                                 <td> {{data.id}} </td>
                                 <td> {{data.session}} </td>
                                 <td> {{data.timecreated}} </td>
-                                <td> {{data.heartrate}} </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>

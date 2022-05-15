@@ -12,6 +12,9 @@ export class HeartrateService {
     private heartrates: Heartrate[] = [];
     private heartratesUpdated = new Subject<Heartrate[]>();
 
+    private heartratesSession: Heartrate[] = [];
+    private heartratesSessionUpdated = new Subject<Heartrate[]>();
+
     constructor(private http: HttpClient,  private router: Router, private serializer: UrlSerializer) {}
 
     getHeartratesAll() {
@@ -27,19 +30,19 @@ export class HeartrateService {
     }
 
 
-    // getHeartRateByID(id: number) {
+    getHeartRateBySessionID(sessionid: number) {
 
-    //     console.log(environment.apiURL + "/craftbeers/" + id);
-    //     this.http.get<Heartrate>(environment.apiURL + "/craftbeers/" + id)
-    //         .subscribe((craftbeer) => {
-    //             this.craftbeer = craftbeer;
-    //             this.craftbeerUpdated.next(this.craftbeer);
-    //         });
-    // }
+        console.log(environment.apiURL + "/heartrate/" + sessionid);
+        this.http.get<Heartrate[]>(environment.apiURL + "/heartrate/" + sessionid)
+            .subscribe((heartrateData) => {
+                this.heartratesSession = heartrateData;
+                this.heartratesSessionUpdated.next(this.heartratesSession);
+            });
+    }
 
-    // getCraftBeerByIDUpdateListener() {
-    //     return this.craftbeerUpdated.asObservable();
-    // }
+    getHeartRateBySessionIDUpdateListener() {
+        return this.heartratesSessionUpdated.asObservable();
+    }
 
     createHeartrate(id: number, session: number, timecreated: string, heartratedata: number) {
         const heartrate: Heartrate = {
